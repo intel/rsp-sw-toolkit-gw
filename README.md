@@ -10,7 +10,7 @@ The Gateway is a Java application built with Gradle. As such, it can run on any 
 
 ### Install and Build
 ``` 
-sudo apt-get install openjdk-8-jdk git gradle
+sudo apt-get install openjdk-8-jdk git
 sudo apt-get install mosquitto avahi-daemon ntp ssh gradle
 
 cd ${PROJECT_DIR}
