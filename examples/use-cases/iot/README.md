@@ -137,7 +137,7 @@ Edit file **~/projects/rsp-sw-toolkit-gw/examples/use-cases/iot/secrets/demo-ui.
 
 - `freezerReaderName`: Alias of RSP reader at the freezer location. (Alias was previously set to 'Freezer' in tutorial 1)
 - `temperatureDevice`: BLE temperature sensor name. Use the BlueMaestro Tempo Plus App ([Tempo Disc temperature sensor](https://bluemaestro.com/products/product-details/bluetooth-temperature-sensor-beacon), **under Apps section**) to find the name of your sensor. (Case sensitive - this should be the same value that was used as temperatureSensor in the Food Safety Section above)
-  
+
 ## Installation
 
 Install Docker:
@@ -146,7 +146,7 @@ Install Docker:
 sudo apt update && sudo apt install -y docker.io docker-compose
 ```
 
-Install bluetooth libraries:
+Install bluetooth libraries and tooling:
 
 ```sh
 sudo apt-get install -y bluetooth bluez bluez-hcidump rfkill
