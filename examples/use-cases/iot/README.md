@@ -135,8 +135,8 @@ Edit the file **~/projects/rsp-sw-toolkit-gw/examples/use-cases/iot/secrets/loss
 
 Edit file **~/projects/rsp-sw-toolkit-gw/examples/use-cases/iot/secrets/demo-ui.json** and assign values to the following variables:
 
-- `temperatureDevice`: BLE temperature sensor name. Use the BlueMaestro Tempo Plus App ([Tempo Disc temperature sensor](https://bluemaestro.com/products/product-details/bluetooth-temperature-sensor-beacon), **under Apps section**) to find the name of your sensor. (Case sensitive - this should be the same value that was used as temperatureSensor in the Food Safety Section above)
 - `freezerReaderName`: Alias of RSP reader at the freezer location. (Alias was previously set to 'Freezer' in tutorial 1)
+- `temperatureDevice`: BLE temperature sensor name. Use the BlueMaestro Tempo Plus App ([Tempo Disc temperature sensor](https://bluemaestro.com/products/product-details/bluetooth-temperature-sensor-beacon), **under Apps section**) to find the name of your sensor. (Case sensitive - this should be the same value that was used as temperatureSensor in the Food Safety Section above)
   
 ## Installation
 
