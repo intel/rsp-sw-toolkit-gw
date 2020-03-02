@@ -152,6 +152,12 @@ Install bluetooth libraries and tooling:
 sudo apt-get install -y bluetooth bluez bluez-hcidump rfkill
 ```
 
+If it's not running, you can start bluetooth with:
+
+```sh
+sudo systemctl start bluetooth.service
+```
+
 Install Chrome:
 
 ```sh
@@ -159,13 +165,7 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 ```
 
-If it's not running, you can start bluetooth with:
-
-```sh
-sudo systemctl start bluetooth.service
-```
-
-Run setup.sh script to install Intel® RSP Inventory Suite, EdgeX Edinburgh, Food Safety and Loss Prevention apps.
+Run **setup.sh** script (found in this folder) to install Intel® RSP Inventory Suite, EdgeX Edinburgh, Food Safety and Loss Prevention apps.
 
 **_Notice_**: When using a **USB Camera**, add the argument `--usb` like so: `./setup.sh --usb`
 
