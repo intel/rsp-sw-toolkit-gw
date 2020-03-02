@@ -80,7 +80,7 @@ Edit the file <strong>~/projects/rsp-sw-toolkit-gw/examples/use-cases/iot/secret
 - `freezerReaderName`: Alias of RSP reader at the freezer location. (Alias was previously set to 'Freezer' in QSR tutorial 1) (Case sensitive)
 - `emailSubscribers`: Email(s) to receive arrival notifications with details (time, ambient temperature, location). Comma separated. 
 - `trackingEPCs`: EPC tag(s) to be tracked. Comma separated. (Case sensitive)
-- `temperatureSensor`: BLE temperature sensor name. Use Tempo disc mobile app to find the name of your sensor. (Case sensitive)
+- `temperatureSensor`: BLE temperature sensor name. Use the BlueMaestro Tempo Plus App ([Tempo Disc temperature sensor](https://bluemaestro.com/products/product-details/bluetooth-temperature-sensor-beacon), **under Apps section**) to find the name of your sensor. (Case sensitive)
 
 ### Loss prevention
 
