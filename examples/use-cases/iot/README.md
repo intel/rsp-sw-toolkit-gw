@@ -143,7 +143,7 @@ Edit file **~/projects/rsp-sw-toolkit-gw/examples/use-cases/iot/secrets/demo-ui.
 Install Docker:
 
 ```sh
-sudo apt update && sudo apt install -y docker.io docker-compose git
+sudo apt update && sudo apt install -y docker.io docker-compose
 ```
 
 Install bluetooth libraries:
