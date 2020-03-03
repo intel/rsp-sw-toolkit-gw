@@ -193,7 +193,7 @@ Verify that everything is up and running buy opening the Demo web UI using chrom
 Make sure all chrome windows are closed and execute the following command in a new terminal:
 
 ```sh
-google-chrome --disable-web-security --user-data-dir http://127.0.0.1:4200
+google-chrome --disable-web-security --user-data-dir='/tmp' http://127.0.0.1:4200
 ```
 
 ![Demo UI](docs/images/demo-ui-home.png)
