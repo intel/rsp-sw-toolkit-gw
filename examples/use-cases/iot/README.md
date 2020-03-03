@@ -165,6 +165,12 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 ```
 
+Make sure that the RSP controller software is running. If it  is not running, please start it with the following command:
+
+```sh
+~/deploy/rsp-sw-toolkit-gw/run.sh
+```
+
 Run **setup.sh** script (found in this folder) to install Intel® RSP Inventory Suite, EdgeX Edinburgh, Food Safety and Loss Prevention apps.
 
 **_Notice_**: When using a **USB Camera**, add the argument `--usb` like so: `./setup.sh --usb`
