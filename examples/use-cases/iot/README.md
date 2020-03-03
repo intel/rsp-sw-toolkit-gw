@@ -173,12 +173,12 @@ Make sure that the RSP controller software is running. If it  is not running, pl
 
 Run **setup.sh** script (found in this folder) to install Intel® RSP Inventory Suite, EdgeX Edinburgh, Food Safety and Loss Prevention apps.
 
-**_Notice_**: When using a **USB Camera**, add the argument `--usb` like so: `./setup.sh --usb`
-
 ```sh
 cd ~/projects/rsp-sw-toolkit-gw/examples/use-cases/iot/
 ./setup.sh
 ```
+
+**_Notice_**: When using a **USB Camera**, add the argument `--usb` like so: `./setup.sh --usb`
 
 ![Note](docs/images/coffee-cup-sm2.png)  This step may take some time depending on internet connectivity speed and edge computer.
 
