@@ -206,20 +206,28 @@ Food safety service is a sample application that demonstrates how to combine Int
 
 ### Read BLE temperature data
 
+If using an external bluetooth dongle, set the appropriate device ID argument.
+
 In a terminal, run the following commands to start reading temperature data from the BLE sensor:
 
-If using an external bluetooth dongle, set the appropriate device ID argument.
 List Bluetooth adapters:
 
 ```sh
 rfkill list bluetooth --output ID,SOFT,HARD
 ```
 
-Run script:
+The command should return something similar to:
+
+```sh
+ID      SOFT      HARD
+ 0 unblocked unblocked
+```
+
+Use whatever device number is returned by the previous command. In the sample above the ID is 0. By default, if using the integrated bluetooth, it should be device 0.
 
 ```sh
 cd ~/projects/tempo-device-service/bin
-sudo ./sendhci.sh --device 0
+sudo ./sendhci.sh --device <INSERT_YOUR_DEVICE_ID_HERE>
 ```
 
 For bluetooth troubleshooting please visit [Tempo Device Service](https://github.com/intel/rsp-sw-toolkit-im-suite-tempo-device-service)
