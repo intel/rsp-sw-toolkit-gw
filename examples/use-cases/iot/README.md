@@ -299,7 +299,20 @@ You can verify data in the Inventory Suite using this endpoint:
 
 ### Notifications
 
-The Food safety app leverages EdgeX's notification service to send emails. In order to receive email notifications of EPC tags arriving to destination and ambient temperature associated with it, you must configure EdgeX alerts and notification service ( [Documentation](https://docs.edgexfoundry.org/Ch-AlertsNotifications.html#configure-mail-server))
+The Food safety app leverages EdgeX's notification service to send emails. In order to receive email notifications of EPC tags arriving to destination and ambient temperature associated with it, you must configure EdgeX alerts and notification service. The official documentation is available at [Edge-X Documentation](https://docs.edgexfoundry.org/2.0/microservices/support/notifications/Ch-AlertsNotifications/#configure-mail-server).
+
+However, for the simple use case, you can set it up as follows. On the local machine, go to
+[EdgeX Notification setup](http://127.0.0.1:8500/ui/dc1/kv/edgex/core/1.0/edgex-support-notifications/Smtp/)
+
+Once on that page, specify a value for each of the following:
+
+- Host (smtp server, EdgeX currently only supports Gmail and Yahoo)
+- Password (the password used for your account)
+- Port (used by email server)
+- Sender (the account to use)
+- Subject (can be any text that you want to appear)
+
+-----
 
 Using the Demo Web UI, you can search for all notifications that were sent out by navigating into the **Food Safety** tab. In sender, type **Food Safety App** and set a valid date.
 
