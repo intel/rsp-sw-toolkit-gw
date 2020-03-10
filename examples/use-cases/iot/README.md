@@ -188,9 +188,7 @@ cd ~/projects/rsp-sw-toolkit-gw/examples/use-cases/iot/
 
 ## Demo Web UI
 
-Verify that everything is up and running buy opening the Demo web UI using chrome with web-security disabled:
-
-Make sure all chrome windows are closed and execute the following command in a new terminal:
+Verify that everything is up and running by opening the Demo web UI using chrome with web-security disabled. Make sure all chrome windows are closed and execute the following command in a new terminal:
 
 ```sh
 google-chrome --disable-web-security --user-data-dir='/tmp' http://127.0.0.1:4200
