@@ -182,6 +182,14 @@ cd ~/projects/rsp-sw-toolkit-gw/examples/use-cases/iot/
 
 ![Note](docs/images/coffee-cup-sm2.png)  This step may take some time depending on internet connectivity speed and edge computer.
 
+<!-- -->
+
+> ![Warning](docs/images/alert-48.png) **Warning**
+>
+> If the setup.sh fails, you should run stop.sh then run setup.sh again.
+> Running stop.sh will force the containers to be stopped and put the
+> system into a known state.
+
 ## Architecture diagram
 
 ![Architecture](docs/images/diagram.png)
