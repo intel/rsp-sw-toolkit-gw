@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/bash
 
 # Apache v2 license
 # Copyright (C) <2019> Intel Corporation
