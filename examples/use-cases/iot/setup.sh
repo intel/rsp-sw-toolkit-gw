@@ -37,17 +37,18 @@ PARAMS=()
 
 printHelp() {
   printf "\
-Usage: $0 [options...]
+Usage: %s [options...]
 
   --usb   --usb-camera    run loss-prevention service using usb camera instead of IP Camera
-  -s      --sequential    run everything sequentially (no parallel builds)
+  -s      --sequential    run everything sequentially (no parallel builds, default)
+  -p      --parallel      run build and deploy in parallel
   -su     --skip-update   skip checking updates for this script
 
   --url     --github-url  <url>     set the base url to clone from github, including git:// or https://
   --org     --github-org  <org>     set the github organization name (first path after base-url)
   --prefix  --repo-prefix <prefix>  set the prefix to append to each repo-name (default is no prefix)
 
-"
+" "$0"
 }
 
 printAdditionalHelp() {
