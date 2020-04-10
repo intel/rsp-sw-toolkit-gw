@@ -40,7 +40,6 @@ printHelp() {
 Usage: %s [options...]
 
   --usb   --usb-camera    run loss-prevention service using usb camera instead of IP Camera
-  -s      --sequential    run everything sequentially (no parallel builds, default)
   -p      --parallel      run build and deploy in parallel
   -su     --skip-update   skip checking updates for this script
 
@@ -70,7 +69,6 @@ parseArguments() {
       -nc|--no-color) COLOR=0; shift ;;
       -ns|--no-stlye) STYLE=0; shift ;;
       -na|--no-ansi) STYLE=0; COLOR=0; shift ;;
-      -s|--seq|--sequential) PARALLEL_BUILD=0; shift ;;
       -p|--parallel) PARALLEL_BUILD=1; shift ;;
       -su|--skip-update) SKIP_UPDATE=1; shift ;;
       -sx|--set-x) SET_X=1; shift ;;
