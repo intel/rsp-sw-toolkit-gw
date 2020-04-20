@@ -96,6 +96,9 @@ Some additional simulator options can be set by setting them _BEFORE_ the script
 ```
 COLOR=0 QUIET=1 QOS=2 ./rsp_sim.sh 3
 ```
+```
+MQTT_BROKER=127.0.0.1 MQTT_PORT=1883 ./rsp_sim.sh 5
+```
 #### Available options
 ```
 COLOR=0                         // Disable the use of terminal colors (default: 1)
@@ -109,6 +112,8 @@ MAX_DEBUG_BYTES=-1              // Set the maximum bytes of a jsonrpc message to
 ALWAYS_TRUE=1                   // When this is set to 1, respond true to every jsonrpc request even if it is not implemented (default: 0)
 IN_RESET_SECONDS=30             // How many seconds the RSP should stay in the `in_reset` state when a reset is requested before becoming `ready` again (default: 15)
 REBOOT_SECONDS=120              // How many seconds to simulate rebooting an RSP when a `reboot` command is sent (default: 60)
+MQTT_BROKER=hostname.local      // Set the hostname or IP address of the MQTT broker (overrides what is returned automatically from the RSP Controller)
+MQTT_PORT=1883                  // Set the port of the MQTT broker (overrides what is returned automatically from the RSP Controller)
 ```
 
 ### Supported jsonrpc commands

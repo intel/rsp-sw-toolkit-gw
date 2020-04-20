@@ -53,6 +53,9 @@ MAX_DEBUG_BYTES=${MAX_DEBUG_BYTES:-2048}
 ALWAYS_TRUE=${ALWAYS_TRUE:-0}
 IN_RESET_SECONDS=${IN_RESET_SECONDS:-15}
 REBOOT_SECONDS=${REBOOT_SECONDS:-60}
+# By default auto-detect mqtt broker and port from the rsp controller
+MQTT_BROKER=${MQTT_BROKER:-}
+MQTT_PORT=${MQTT_PORT:-}
 
 # rsp file array
 DEVICE_ID_INDEX=0
@@ -66,7 +69,6 @@ DEFAULT_REGION="USA"
 DEFAULT_TOKEN="D544DF3F42EA86BED3C3D15FC321B8E949D666C06B008C6357580BC3816E00DE"
 ROOT_CERT_URL="http://$RSP_CONTROLLER_IP:8080/provision/root-ca-cert"
 MQTT_CRED_URL="https://$RSP_CONTROLLER_IP:8443/provision/sensor-credentials"
-MQTT_BROKER=$RSP_CONTROLLER_IP
 HOST_BASE=150000
 RSP_FILE_BASE="rsp_"
 TAG_FILE_BASE="tags_in_view_of_rsp_"
@@ -148,7 +150,11 @@ pretty_date() {
 # Function takes topic and message string as arguments
 publish () {
     log_debug "[publish] topic: $1, msg: $2"
-    mosquitto_pub -q $QOS -h $MQTT_BROKER -t "$1" -m "$2"
+    mosquitto_pub -q $QOS -h $MQTT_BROKER -p $MQTT_PORT -t "$1" -m "$2"
+    err_code=$?
+    if [ ${err_code} -ne 0 ]; then
+        log_error "Unable to publish to topic $1. Error code: ${err_code}"
+    fi
 }
 
 # Function takes topic and filename as arguments
@@ -157,7 +163,11 @@ publish_file () {
     # only display the raw message if it is smaller than the MAX_DEBUG_BYTES or MAX_DEBUG_BYTES=-1
     local raw_msg=$(if [ $MAX_DEBUG_BYTES -lt 0 ] || [ $bytes -le $MAX_DEBUG_BYTES ]; then echo ", msg: $(cat $2)"; fi)
     log_debug "[publish] topic: $1, len: ${bytes} bytes${raw_msg}"
-    mosquitto_pub -q $QOS -h $MQTT_BROKER -t "$1" -f "$2"
+    mosquitto_pub -q $QOS -h $MQTT_BROKER -p $MQTT_PORT -t "$1" -f "$2"
+    err_code=$?
+    if [ ${err_code} -ne 0 ]; then
+        log_error "Unable to publish to topic $1. Error code: ${err_code}"
+    fi
 }
 
 # Function takes debug message as argument
@@ -171,6 +181,20 @@ log_debug () {
 log_rsp_warning () {
     if [ $QUIET -ne 1 ]; then
         printf "${dim}[$(pretty_date)]${normal} ${bold}${rsp_colors[$1]}%s${clear} ${yellow}[WARNING] %s${clear}\n" "$1" "$2"
+    fi
+}
+
+# Function takes device_id and message as argument
+log_rsp_error () {
+    if [ $QUIET -ne 1 ]; then
+        printf "${dim}[$(pretty_date)]${normal} ${bold}${rsp_colors[$1]}%s${clear} ${red}[ERROR] %s${clear}\n" "$1" "$2"
+    fi
+}
+
+# Function takes message as argument
+log_error () {
+    if [ $QUIET -ne 1 ]; then
+        printf "${dim}[$(pretty_date)]${normal} ${red}[ERROR] %s${clear}\n" "$1"
     fi
 }
 
@@ -206,10 +230,18 @@ get_mqtt_credentials () {
         echo "Cannot access MQTT Credentials REST endpoint!"
         exit 1
     fi
+    log_debug "[response] $RAW"
     IFS='/' read -ra ARRAY <<< "$RAW"
     RAW=${ARRAY[2]}
     IFS=':' read -ra ARRAY <<< "$RAW"
-    MQTT_BROKER=${ARRAY[0]}
+    if [ -z "${MQTT_BROKER}" ]; then
+        MQTT_BROKER=${ARRAY[0]}
+    fi
+    if [ -z "${MQTT_PORT}" ]; then
+        IFS='"' read -ra ARRAY <<< "${ARRAY[1]}"
+        MQTT_PORT=${ARRAY[0]}
+    fi
+    log_debug "Using MQTT broker: tcp://${MQTT_BROKER}:${MQTT_PORT}"
 }
 
 # Function takes device_id and rsp index as arguments
@@ -300,7 +332,7 @@ wait_for_connect_response () {
     index=$1
     eval "$(rsp_array ${index})"
 
-    MSG=$(mosquitto_sub -h $MQTT_BROKER -t rfid/rsp/connect/${rsp[$DEVICE_ID_INDEX]} -C 1 -q $QOS)
+    MSG=$(mosquitto_sub -h $MQTT_BROKER -p $MQTT_PORT -t rfid/rsp/connect/${rsp[$DEVICE_ID_INDEX]} -C 1 -q $QOS)
     log_debug "[receive] topic: rfid/rsp/connect/${rsp[$DEVICE_ID_INDEX]}, msg: $MSG"
     # Split the message into individual parameters
     IFS=',' read -ra SP1 <<< "$MSG"
@@ -321,9 +353,18 @@ wait_for_command () {
     while true; do
         eval "$(rsp_array ${index})"
         # Wait for the MQTT command (block)
-        CMD=$(mosquitto_sub -h $MQTT_BROKER -t rfid/rsp/command/${rsp[$DEVICE_ID_INDEX]} -C 1 -q $QOS)
-        log_debug "[receive] topic: rfid/rsp/command/${rsp[$DEVICE_ID_INDEX]}, msg: $CMD"
-        process_command $index $CMD &
+        CMD=$(mosquitto_sub -h $MQTT_BROKER -p $MQTT_PORT -t rfid/rsp/command/${rsp[$DEVICE_ID_INDEX]} -C 1 -q $QOS)
+        err_code=$?
+        if [ ${err_code} -ne 0 ]; then
+            log_rsp_error "${rsp[$DEVICE_ID_INDEX]}" "Unable to subscribe to mqtt broker at tcp://${MQTT_BROKER}:${MQTT_PORT}. Error code: ${err_code}"
+            # wait a bit before trying again
+            sleep 1
+        elif [ -z "$CMD" ]; then
+            log_rsp_warning "${rsp[$DEVICE_ID_INDEX]}" "Received empty mqtt message, ignoring!"
+        else
+            log_debug "[receive] topic: rfid/rsp/command/${rsp[$DEVICE_ID_INDEX]}, msg: $CMD"
+            process_command $index $CMD &
+        fi
     done
 }
 
